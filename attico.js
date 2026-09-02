@@ -1,6 +1,5 @@
-const atticoForm = document.querySelector('#attico-form');
 const propertyTour = document.querySelector('.property-tour');
-const tourVideo = document.querySelector('.property-hero-video');
+const tourImage = document.querySelector('.property-hero-image');
 const tourTitle = document.querySelector('.property-camera-title');
 const tourDescription = document.querySelector('.property-camera-description');
 const statusNumber = document.querySelector('.property-status-number');
@@ -8,45 +7,22 @@ const statusWord = document.querySelector('.property-status-word');
 const tourProgress = document.querySelector('.property-tour-progress span');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-let desiredVideoTime = 0;
 let activeStep = -1;
 let scrollFrame = 0;
-let videoFrame = 0;
-let videoIsSeeking = false;
-let lastVideoTick = 0;
 
 const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
-
-function scheduleVideoSeek() {
-  if (videoFrame || videoIsSeeking || reduceMotion.matches || !Number.isFinite(tourVideo.duration)) return;
-
-  videoFrame = window.requestAnimationFrame((timestamp) => {
-    videoFrame = 0;
-    const distance = desiredVideoTime - tourVideo.currentTime;
-    if (Math.abs(distance) < .015 || videoIsSeeking) return;
-
-    // Short, capped seeks make the camera glide in both scroll directions
-    // instead of decoding every wheel tick.
-    const elapsed = Math.min(timestamp - (lastVideoTick || timestamp - 16), 48);
-    lastVideoTick = timestamp;
-    const smoothing = 1 - Math.exp(-elapsed / 88);
-    const nextTime = tourVideo.currentTime + clamp(distance * smoothing, -.13, .13);
-    videoIsSeeking = true;
-    tourVideo.currentTime = nextTime;
-  });
-}
 
 function setTourFrame() {
   const rect = propertyTour.getBoundingClientRect();
   const travel = Math.max(propertyTour.offsetHeight - window.innerHeight, 1);
   const progress = clamp(-rect.top / travel);
 
-  if (!reduceMotion.matches && Number.isFinite(tourVideo.duration)) {
-    desiredVideoTime = progress * Math.max(tourVideo.duration - .08, 0);
-    scheduleVideoSeek();
+  tourProgress.style.transform = `scaleX(${progress})`;
+  if (!reduceMotion.matches) {
+    tourImage.style.transform = `scale(${1.02 + progress * .08})`;
+    tourImage.style.backgroundPosition = `${68 - progress * 18}% ${50 - progress * 4}%`;
   }
 
-  tourProgress.style.transform = `scaleX(${progress})`;
   const step = progress < .34 ? 0 : progress < .7 ? 1 : 2;
   if (step === activeStep) return;
 
@@ -71,50 +47,9 @@ function requestTourFrame() {
   });
 }
 
-function loadScrollVideo() {
-  if (reduceMotion.matches || !tourVideo.dataset.videoSrc) return;
-
-  // A local Blob gives equally responsive seeking on simple static hosting,
-  // where byte-range media requests are not always available.
-  fetch(tourVideo.dataset.videoSrc)
-    .then((response) => response.ok ? response.blob() : Promise.reject(response.status))
-    .then((blob) => {
-      tourVideo.src = URL.createObjectURL(blob);
-      tourVideo.load();
-    })
-    .catch(() => {
-      // The source element remains a reliable fallback for direct file previews.
-    });
-}
-
-if (reduceMotion.matches) {
-  tourVideo.pause();
-} else if ('IntersectionObserver' in window) {
-  const videoObserver = new IntersectionObserver((entries, observer) => {
-    if (!entries.some((entry) => entry.isIntersecting)) return;
-    observer.disconnect();
-    loadScrollVideo();
-  }, { rootMargin: '320px 0px' });
-  videoObserver.observe(propertyTour);
-} else {
-  loadScrollVideo();
-}
-
-tourVideo.addEventListener('seeked', () => {
-  videoIsSeeking = false;
-  scheduleVideoSeek();
-});
-tourVideo.addEventListener('loadedmetadata', setTourFrame);
 window.addEventListener('scroll', requestTourFrame, { passive: true });
 window.addEventListener('resize', requestTourFrame, { passive: true });
 setTourFrame();
-
-atticoForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const status = atticoForm.querySelector('.property-form-status');
-  status.textContent = 'Ricevuto. Il private advisor Housei ti ricontatterà a breve.';
-  atticoForm.reset();
-});
 
 const menuButton = document.querySelector('.property-menu-button');
 const mobileMenu = document.querySelector('.mobile-menu');

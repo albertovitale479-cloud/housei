@@ -42,3 +42,16 @@ git push -u origin main
 3. Clicca **Deploy**.
 
 I push su `main` aggiornano la produzione; le pull request ricevono una preview. `vercel.json` applica URL puliti, header di sicurezza e cache per gli asset. Prima di condividere il sito, sostituisci gli URL relativi Open Graph con il dominio Vercel definitivo, se vuoi anteprime social perfette.
+
+## Modulo “Parla con un advisor”
+
+Il modulo usa una Vercel Function (`api/contact.js`) che inoltra i messaggi via [Resend](https://resend.com). Prima di pubblicare la versione con il form attivo:
+
+1. Crea un account Resend e verifica il dominio da cui partiranno le email.
+2. In Vercel apri **Project Settings → Environment Variables** e aggiungi:
+   - `RESEND_API_KEY`: chiave API di Resend;
+   - `CONTACT_FROM_EMAIL`: mittente verificato, ad esempio `Housei <advisor@tuodominio.it>`;
+   - `CONTACT_TO_EMAIL`: casella che riceverà le richieste, ad esempio `team@tuodominio.it`.
+3. Fai un nuovo deploy e invia una richiesta di prova.
+
+Il sito non mostra più una conferma fittizia: senza questa configurazione avvisa chiaramente che l'invio non è disponibile.

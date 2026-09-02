@@ -3,18 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Richiedi una visita privata Housei." />
+    <meta name="description" content="Parla con un advisor Housei e richiedi informazioni riservate sulle dimore in collezione." />
     <meta name="theme-color" content="#101415" />
-    <title>Visita privata — Housei</title>
+    <title>Parla con un advisor — Housei</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260902" />
   </head>
   <body class="property-page private-visit-page">
-    <a class="skip-link" href="#private-visit">Vai al modulo di richiesta</a>
+    <a class="skip-link" href="#advisor-form">Vai al modulo per parlare con un advisor</a>
 
-    <header class="property-header">
+    <header class="property-header advisor-header">
       <a class="brand" href="./index.html#top" aria-label="Housei, torna alla home">housei<span>.</span></a>
       <nav class="property-nav" aria-label="Navigazione principale">
         <a href="./index.html#tour">Casa Aurea</a>
@@ -22,7 +22,7 @@
         <a href="./index.html#collection">Collezione</a>
       </nav>
       <div class="property-header-actions">
-        <a class="property-back" href="./index.html#top" aria-label="Torna alla home">← <span>Home</span></a>
+        <a class="property-back" href="./index.html#collection" aria-label="Torna alla collezione">← <span>Collezione</span></a>
         <button class="menu-button property-menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu">
           <span class="sr-only">Apri menu</span><span></span><span></span>
         </button>
@@ -39,30 +39,58 @@
         <a href="./attico-velario.html"><span class="mobile-menu-index">02</span><span>Attico Velario</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
         <a href="./index.html#collection"><span class="mobile-menu-index">03</span><span>Collezione</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
       </div>
-      <a class="mobile-menu-visit" href="#private-visit"><span>Visita privata</span><span aria-hidden="true">↗</span></a>
+      <a class="mobile-menu-visit" href="#advisor-form"><span>Parla con un advisor</span><span aria-hidden="true">↗</span></a>
     </nav>
 
-    <main>
-      <section class="private-visit-intro" aria-labelledby="private-intro-title">
-        <div class="private-visit-copy">
-          <p class="eyebrow light">Housei / Private real estate</p>
-          <h1 id="private-intro-title">Una visita<br /><em>senza rumore.</em></h1>
-          <p>Raccontaci cosa cerchi. Ti apriremo soltanto le porte che meritano di essere attraversate.</p>
+    <main class="advisor-main">
+      <section class="advisor-intake" aria-labelledby="advisor-title">
+        <div class="advisor-intake-copy">
+          <p class="eyebrow light">Housei <span></span> Consulenza riservata</p>
+          <h1 id="advisor-title">Parla con<br /><em>un advisor.</em></h1>
+          <p>Dicci cosa stai cercando. Un advisor Housei userà questi dettagli per preparare una conversazione utile, non una proposta generica.</p>
+          <ol class="advisor-steps" aria-label="Come funziona">
+            <li><span>01</span><strong>Raccontaci la ricerca</strong><small>Dimora, città o esigenza.</small></li>
+            <li><span>02</span><strong>Parla con la persona giusta</strong><small>La richiesta arriva al team Housei.</small></li>
+            <li><span>03</span><strong>Decidi il prossimo passo</strong><small>Dossier, visita o confronto riservato.</small></li>
+          </ol>
         </div>
-      </section>
 
-      <section class="property-inquire" id="private-visit" aria-labelledby="private-visit-title">
-        <div>
-          <p class="eyebrow">Visita privata</p>
-          <h2 id="private-visit-title">Questo non è<br />un appuntamento.<br /><em>È un accesso.</em></h2>
-        </div>
-        <form class="property-form" id="private-visit-form">
-          <label>Nome e cognome<input type="text" name="name" autocomplete="name" required /></label>
-          <label>Email<input type="email" name="email" autocomplete="email" required /></label>
-          <label>Telefono<input type="tel" name="tel" autocomplete="tel" /></label>
-          <label>Messaggio<textarea name="message" rows="3" placeholder="Dimmi quale dimora vuoi conoscere."></textarea></label>
-          <button class="property-submit" type="submit">Richiedi accesso <span aria-hidden="true">↗</span></button>
-          <p class="property-form-status" aria-live="polite"></p>
+        <form class="advisor-form" id="advisor-form" data-endpoint="/api/contact" novalidate>
+          <div class="advisor-form-heading">
+            <p class="eyebrow">Richiesta riservata</p>
+            <h2>Da dove<br />partiamo?</h2>
+            <p id="advisor-context" class="advisor-context" aria-live="polite" hidden></p>
+          </div>
+          <div class="advisor-form-fields">
+            <label class="advisor-honeypot" for="website">Non compilare questo campo<input id="website" type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+            <label for="interest">Mi interessa</label>
+            <select id="interest" name="interest" required>
+              <option value="Consulenza Housei">Parlare con un advisor</option>
+              <option value="Casa Aurea">Casa Aurea</option>
+              <option value="Attico Velario">Attico Velario</option>
+              <option value="Un'altra dimora">Un'altra dimora</option>
+            </select>
+
+            <label for="name">Nome e cognome</label>
+            <input id="name" type="text" name="name" autocomplete="name" required />
+
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" autocomplete="email" inputmode="email" required />
+
+            <label for="tel">Telefono <span>(facoltativo)</span></label>
+            <input id="tel" type="tel" name="tel" autocomplete="tel" inputmode="tel" />
+
+            <label for="message">Cosa stai cercando?</label>
+            <textarea id="message" name="message" rows="4" placeholder="Zona, tempistiche, esigenze o una domanda specifica." required></textarea>
+
+            <label class="advisor-consent" for="consent">
+              <input id="consent" type="checkbox" name="consent" required />
+              <span>Autorizzo Housei a ricontattarmi in merito a questa richiesta.</span>
+            </label>
+
+            <button class="property-submit" type="submit"><span>Invia la richiesta</span><span aria-hidden="true">↗</span></button>
+            <p class="property-form-status" role="status" aria-live="polite"></p>
+          </div>
         </form>
       </section>
     </main>
@@ -72,6 +100,6 @@
       <p>Private real estate</p>
       <p>© 2026 Housei</p>
     </footer>
-    <script src="private-visit.js"></script>
+    <script src="private-visit.js?v=20260902"></script>
   </body>
 </html>

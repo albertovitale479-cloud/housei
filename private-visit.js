@@ -1,9 +1,14 @@
 const menuButton = document.querySelector('.property-menu-button');
 const mobileMenu = document.querySelector('.mobile-menu');
 const menuLabel = menuButton.querySelector('.sr-only');
-const privateVisitForm = document.querySelector('#private-visit-form');
+const advisorForm = document.querySelector('#advisor-form');
+const interestSelect = advisorForm.querySelector('#interest');
+const advisorContext = document.querySelector('#advisor-context');
+const formStatus = advisorForm.querySelector('.property-form-status');
+const submitButton = advisorForm.querySelector('[type="submit"]');
 let menuCloseTimer = 0;
 let menuFocusTimer = 0;
+
 const menuFocusables = () => Array.from(mobileMenu.querySelectorAll('a, button:not([disabled])'));
 
 const closeMenu = (restoreFocus = true) => {
@@ -34,18 +39,60 @@ menuButton.addEventListener('click', () => {
 mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => closeMenu(false)));
 window.addEventListener('keydown', (event) => {
   if (menuButton.getAttribute('aria-expanded') !== 'true') return;
-  if (event.key === 'Escape') return closeMenu();
+  if (event.key === 'Escape') {
+    closeMenu();
+    return;
+  }
   if (event.key !== 'Tab') return;
   const items = menuFocusables();
-  const nextIndex = items.indexOf(document.activeElement) + (event.shiftKey ? -1 : 1);
+  const currentIndex = items.indexOf(document.activeElement);
+  const nextIndex = event.shiftKey ? currentIndex - 1 : currentIndex + 1;
   if (nextIndex < 0 || nextIndex >= items.length) {
     event.preventDefault();
     items[event.shiftKey ? items.length - 1 : 0]?.focus();
   }
 });
 
-privateVisitForm.addEventListener('submit', (event) => {
+const requestedInterest = new URLSearchParams(window.location.search).get('interesse');
+const optionValues = Array.from(interestSelect.options).map((option) => option.value);
+
+if (requestedInterest) {
+  interestSelect.value = optionValues.includes(requestedInterest) ? requestedInterest : "Un'altra dimora";
+  advisorContext.hidden = false;
+  advisorContext.textContent = `Richiesta per: ${requestedInterest}.`;
+}
+
+advisorForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  privateVisitForm.querySelector('.property-form-status').textContent = 'Ricevuto. Il private advisor Housei ti ricontatterà a breve.';
-  privateVisitForm.reset();
+  formStatus.textContent = '';
+
+  if (!advisorForm.checkValidity()) {
+    advisorForm.reportValidity();
+    return;
+  }
+
+  const request = Object.fromEntries(new FormData(advisorForm).entries());
+  submitButton.disabled = true;
+  submitButton.querySelector('span').textContent = 'Invio in corso';
+  formStatus.textContent = 'Stiamo inviando la tua richiesta…';
+
+  try {
+    const response = await fetch(advisorForm.dataset.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request),
+    });
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) throw new Error(result.message || 'La richiesta non può essere inviata in questo momento.');
+
+    advisorForm.reset();
+    interestSelect.value = requestedInterest && optionValues.includes(requestedInterest) ? requestedInterest : 'Consulenza Housei';
+    formStatus.textContent = result.message || 'Richiesta inviata. Un advisor Housei ti ricontatterà a breve.';
+  } catch (error) {
+    formStatus.textContent = error.message || 'Non siamo riusciti a inviare la richiesta. Riprova tra poco.';
+  } finally {
+    submitButton.disabled = false;
+    submitButton.querySelector('span').textContent = 'Invia la richiesta';
+  }
 });

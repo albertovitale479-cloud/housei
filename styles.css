@@ -120,7 +120,7 @@ em { font-weight: 400; }
 .property-card--velario { min-height: 440px; }
 .property-card-image { position: absolute; z-index: -2; inset: 0; background-position: center; background-size: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1), filter .6s ease; }
 .property-card--aurea .property-card-image { background-image: url("assets/villa-hero.png"); }
-.property-card--velario .property-card-image { background-image: url("assets/attico-velario-poster.jpg"); }
+.property-card--velario .property-card-image { background-image: url("assets/attico-velario-clean.png"); }
 .property-card-shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, rgba(4,7,8,.08), rgba(4,7,8,.7)); }
 .property-card:hover .property-card-image, .property-card:focus-visible .property-card-image { transform: scale(1.035); filter: saturate(1.08); }
 .property-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
@@ -150,8 +150,37 @@ footer p { margin: 0; }
 .property-nav a:hover { opacity: .58; }
 .property-back { font-size: .66rem; letter-spacing: .13em; text-transform: uppercase; }
 .property-header-actions { display: flex; align-items: center; gap: 1rem; }
-.property-page .mobile-menu::before { background-image: linear-gradient(100deg, rgba(9,12,13,.94), rgba(9,12,13,.76)), url("assets/attico-velario-poster.jpg"); }
+.property-page .mobile-menu::before { background-image: linear-gradient(100deg, rgba(9,12,13,.94), rgba(9,12,13,.76)), url("assets/attico-velario-clean.png"); }
 .property-page.menu-is-open .property-header { color: #f1eee7; }
+.advisor-header { position: sticky; background: rgba(16,20,21,.94); backdrop-filter: blur(14px); }
+.advisor-main { background: #101415; }
+.advisor-intake { display: grid; grid-template-columns: minmax(320px, .9fr) minmax(480px, 1fr); gap: clamp(3rem, 9vw, 11rem); min-height: calc(100svh - 88px); padding: clamp(4rem, 8vw, 8rem) clamp(1.3rem, 9.5vw, 10rem); align-items: center; }
+.advisor-intake-copy { max-width: 530px; }
+.advisor-intake-copy h1 { margin: 1.1rem 0 1.5rem; font-size: clamp(4.4rem, 7.7vw, 9rem); }
+.advisor-intake-copy > p:not(.eyebrow) { max-width: 450px; margin: 0; color: rgba(241,238,231,.78); line-height: 1.7; }
+.advisor-steps { display: grid; gap: 0; margin: clamp(2.8rem, 5vw, 4.5rem) 0 0; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,.2); }
+.advisor-steps li { display: grid; grid-template-columns: 2.3rem 1fr; column-gap: .7rem; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,.2); }
+.advisor-steps li > span { grid-row: span 2; color: #d4b476; font-size: .61rem; letter-spacing: .12em; }
+.advisor-steps strong { font-size: .7rem; font-weight: 500; letter-spacing: .11em; text-transform: uppercase; }
+.advisor-steps small { margin-top: .25rem; color: rgba(241,238,231,.62); font-size: .82rem; line-height: 1.4; }
+.advisor-form { display: grid; grid-template-columns: minmax(170px, .65fr) minmax(280px, 1fr); gap: clamp(2rem, 4vw, 4.5rem); max-width: 800px; padding: clamp(2rem, 4vw, 4rem); background: #f0ede5; color: #151717; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+.advisor-form-heading { align-self: start; }
+.advisor-form-heading .eyebrow { color: #7c6337; }
+.advisor-form-heading h2 { margin: 1rem 0 0; font-size: clamp(3rem, 4.4vw, 5rem); }
+.advisor-context { margin: 1.3rem 0 0; color: rgba(21,23,23,.72); font-size: .8rem; line-height: 1.5; }
+.advisor-form-fields { display: grid; gap: 1rem; }
+.advisor-form label { display: grid; gap: .35rem; color: rgba(21,23,23,.75); font-size: .62rem; letter-spacing: .13em; text-transform: uppercase; }
+.advisor-form label > span { color: rgba(21,23,23,.52); font-size: .56rem; }
+.advisor-form input:not([type="checkbox"]), .advisor-form textarea, .advisor-form select { width: 100%; padding: .68rem 0; border: 0; border-bottom: 1px solid rgba(20,20,16,.35); border-radius: 0; outline: none; background: transparent; color: #151717; font: inherit; font-size: .94rem; letter-spacing: 0; text-transform: none; }
+.advisor-form select { cursor: pointer; }
+.advisor-form input:not([type="checkbox"]):focus, .advisor-form textarea:focus, .advisor-form select:focus { border-bottom-color: #7c6337; }
+.advisor-consent { display: flex !important; align-items: flex-start; gap: .7rem; padding-top: .55rem; font-size: .61rem !important; line-height: 1.5; letter-spacing: .07em !important; text-transform: none !important; }
+.advisor-consent input { width: 1rem; height: 1rem; margin: .05rem 0 0; accent-color: #7c6337; }
+.advisor-honeypot { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.advisor-form .property-submit { margin-top: .25rem; background: #151717; color: #f1eee7; border-color: #151717; }
+.advisor-form .property-submit:hover { background: transparent; color: #151717; }
+.advisor-form .property-submit:disabled { cursor: wait; opacity: .65; }
+.advisor-form .property-form-status { min-height: 2.5em; margin: 0; color: rgba(21,23,23,.7); line-height: 1.5; }
 .private-visit-intro { position: relative; display: grid; min-height: min(760px, 82svh); padding: clamp(9rem, 15vw, 14rem) clamp(1.3rem, 9.5vw, 10rem) clamp(5rem, 9vw, 8rem); align-items: end; overflow: hidden; isolation: isolate; background: #1c2224; color: #f1eee7; }
 .private-visit-intro::before { position: absolute; z-index: -2; inset: 0; content: ""; background: linear-gradient(90deg, rgba(4,7,8,.84), rgba(4,7,8,.2)), url("assets/villa-hero.png") center / cover; }
 .private-visit-intro::after { position: absolute; z-index: -1; inset: 0; content: ""; background: linear-gradient(0deg, rgba(4,7,8,.6), transparent 56%); }
@@ -162,7 +191,7 @@ footer p { margin: 0; }
 .property-tour { position: relative; background: #1c2224; }
 .property-hero { position: sticky; z-index: 0; top: 0; min-height: 760px; height: 100svh; overflow: hidden; isolation: isolate; background: #1c2224; }
 .property-camera-path { position: relative; height: 410svh; pointer-events: none; }
-.property-hero-video { position: absolute; z-index: -3; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transform: translateZ(0); }
+.property-hero-image { position: absolute; z-index: -3; inset: 0; background: #1c2224 url("assets/attico-velario-clean.png") 68% center / cover; transform: scale(1.02); transform-origin: center; will-change: transform, background-position; }
 .property-hero-shade { position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, rgba(2,5,6,.66), rgba(2,5,6,.08) 62%), linear-gradient(0deg, rgba(2,5,6,.58), transparent 50%); }
 .property-hero-grid { position: absolute; z-index: -1; inset: 0; opacity: .27; background-image: linear-gradient(90deg, transparent 49.93%, rgba(255,255,255,.23) 50%, transparent 50.07%), linear-gradient(0deg, transparent 49.93%, rgba(255,255,255,.13) 50%, transparent 50.07%); background-size: 50% 100%, 100% 50%; pointer-events: none; }
 .property-hero-copy { position: absolute; top: 50%; left: clamp(1.3rem, 9.5vw, 10rem); width: min(760px, 74vw); transform: translateY(-42%); }
@@ -192,8 +221,8 @@ footer p { margin: 0; }
 .spaces-heading h2 { margin: 1.1rem 0 0; font-size: clamp(3.5rem, 5.8vw, 7rem); }
 .space-panel { position: relative; display: flex; min-height: 830px; padding: 2rem clamp(1.3rem, 4vw, 4rem); flex-direction: column; justify-content: flex-end; overflow: hidden; background-position: center; background-size: cover; }
 .space-panel::before { position: absolute; inset: 0; content: ""; background: linear-gradient(0deg, rgba(0,0,0,.72), transparent 60%); }
-.space-panel--living { background-image: linear-gradient(155deg, rgba(112,130,132,.45), rgba(15,17,18,.85)), url("assets/attico-velario-poster.jpg"); }
-.space-panel--roof { margin-top: 180px; background-image: linear-gradient(155deg, rgba(102,82,59,.35), rgba(15,17,18,.87)), url("assets/attico-velario-poster.jpg"); }
+.space-panel--living { background-image: linear-gradient(155deg, rgba(112,130,132,.45), rgba(15,17,18,.85)), url("assets/attico-velario-clean.png"); }
+.space-panel--roof { margin-top: 180px; background-image: linear-gradient(155deg, rgba(102,82,59,.35), rgba(15,17,18,.87)), url("assets/attico-velario-clean.png"); }
 .space-panel > * { position: relative; }
 .space-index { margin: 0 0 auto; font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; }
 .space-panel h3 { max-width: 440px; margin: 0 0 1.2rem; font-family: var(--serif); font-size: clamp(3.4rem, 5.7vw, 6.4rem); font-weight: 400; letter-spacing: -.07em; line-height: .84; }
@@ -248,11 +277,15 @@ textarea { resize: vertical; }
   .property-card-stack { grid-template-columns: 1fr; gap: 1rem; }
   .property-card, .property-card--velario { aspect-ratio: 1.08 / 1; min-height: 440px; }
   .property-header { height: 74px; }
+  .advisor-header { position: sticky; }
   .property-nav { display: none; }
   .property-header .menu-button { display: block; }
   .property-hero { min-height: 680px; }
   .private-visit-intro { min-height: 680px; padding: 8.5rem 1.3rem 5rem; }
   .private-visit-copy h1 { font-size: clamp(4.6rem, 18vw, 6.7rem); }
+  .advisor-intake { grid-template-columns: 1fr; gap: 3.5rem; min-height: auto; padding: 4.5rem 1.3rem 5.5rem; }
+  .advisor-intake-copy h1 { font-size: clamp(4.4rem, 18vw, 6.7rem); }
+  .advisor-form { grid-template-columns: 1fr; gap: 2rem; padding: 1.5rem; }
   .property-camera-path { height: 370svh; }
   .property-hero-copy { top: 48%; width: calc(100% - 2.6rem); transform: translateY(-50%); }
   .property-hero-copy h1 { font-size: clamp(4.6rem, 18vw, 6.7rem); }

@@ -9,13 +9,13 @@
     <meta property="og:locale" content="it_IT" />
     <meta property="og:title" content="Attico Velario — Housei" />
     <meta property="og:description" content="Un attico Housei nel cielo di Milano." />
-    <meta property="og:image" content="/assets/attico-velario-poster.jpg" />
+    <meta property="og:image" content="/assets/attico-velario-clean.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>Attico Velario — Housei</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260902" />
   </head>
   <body class="property-page">
     <a class="skip-link" href="#details">Vai ai dettagli dell'attico</a>
@@ -24,7 +24,7 @@
       <nav class="property-nav" aria-label="Navigazione attico">
         <a href="index.html#collection">Collezione</a>
         <a href="#details">Dettagli</a>
-        <a href="#inquire">Visita privata</a>
+        <a href="./visita-privata.html?interesse=Attico%20Velario">Parla con un advisor</a>
       </nav>
       <div class="property-header-actions">
         <a class="property-back" href="index.html#top" aria-label="Torna alla home">← <span>Home</span></a>
@@ -45,15 +45,13 @@
         <a href="#details"><span class="mobile-menu-index">02</span><span>La dimora</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
         <a href="index.html#collection"><span class="mobile-menu-index">03</span><span>Collezione</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
       </div>
-      <a class="mobile-menu-visit" href="#inquire"><span>Visita privata</span><span aria-hidden="true">↗</span></a>
+      <a class="mobile-menu-visit" href="./visita-privata.html?interesse=Attico%20Velario"><span>Parla con un advisor</span><span aria-hidden="true">↗</span></a>
     </nav>
 
     <main>
       <section class="property-tour" id="immersive-tour" aria-labelledby="attico-title">
         <div class="property-hero">
-          <video class="property-hero-video" muted playsinline preload="metadata" poster="assets/attico-velario-poster.jpg" data-video-src="assets/attico-velario-scroll.mp4">
-            <source src="assets/attico-velario-scroll.mp4" type="video/mp4" />
-          </video>
+          <div class="property-hero-image" aria-hidden="true"></div>
           <div class="property-hero-shade"></div>
           <div class="property-hero-grid" aria-hidden="true"></div>
           <p class="property-tour-status" aria-live="polite"><span class="property-status-number">01</span> <span class="property-status-word">Avvicinati</span></p>
@@ -76,7 +74,7 @@
         <h2 id="intro-title">Quando il cielo<br />diventa <em>spazio privato.</em></h2>
         <div class="property-intro-copy">
           <p>Al vertice di una residenza contemporanea, Velario trasforma il panorama in architettura. Dalla piscina sul tetto al salone a doppia altezza, ogni ambiente mantiene Milano esattamente dove dovrebbe essere: davanti a te.</p>
-          <a class="ink-link" href="#inquire">Richiedi il dossier riservato <span aria-hidden="true">→</span></a>
+          <a class="ink-link" href="./visita-privata.html?interesse=Attico%20Velario">Richiedi il dossier riservato <span aria-hidden="true">→</span></a>
         </div>
       </section>
 
@@ -106,24 +104,12 @@
 
       <section class="property-reveal" aria-label="Film dell'attico">
         <div class="property-reveal-film">
-          <img class="property-reveal-image" src="assets/attico-velario-poster.jpg" alt="Ingresso dell'Attico Velario al crepuscolo" loading="lazy" />
+          <img class="property-reveal-image" src="assets/attico-velario-clean.png" alt="Salone dell'Attico Velario con vista sullo skyline di Milano" loading="lazy" />
           <div class="property-reveal-shade"></div>
           <p>Attico Velario<br /><span>Una dimora Housei</span></p>
         </div>
       </section>
 
-      <section class="property-inquire" id="inquire" aria-labelledby="inquire-title">
-        <p class="eyebrow">Visita privata</p>
-        <h2 id="inquire-title">Questo non è<br />un appuntamento.<br /><em>È un accesso.</em></h2>
-        <form class="property-form" id="attico-form">
-          <label>Nome e cognome<input type="text" name="name" autocomplete="name" required /></label>
-          <label>Email<input type="email" name="email" autocomplete="email" required /></label>
-          <label>Telefono<input type="tel" name="tel" autocomplete="tel" /></label>
-          <label>Messaggio<textarea name="message" rows="2" placeholder="Vorrei ricevere il dossier dell'Attico Velario."></textarea></label>
-          <button class="property-submit" type="submit">Richiedi accesso <span aria-hidden="true">↗</span></button>
-          <p class="property-form-status" aria-live="polite"></p>
-        </form>
-      </section>
     </main>
 
     <footer>
@@ -131,6 +117,6 @@
       <p>Attico Velario · Milano</p>
       <p>© 2026 Housei</p>
     </footer>
-    <script src="attico.js"></script>
+    <script src="attico.js?v=20260902"></script>
   </body>
 </html>
