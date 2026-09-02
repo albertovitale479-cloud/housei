@@ -1,0 +1,7 @@
+.DS_Store
+.venv/
+.pixverse-runtime/
+.vercel/
+projects/
+node_modules/
+npm-debug.log*

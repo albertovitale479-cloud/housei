@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Housei — dimore straordinarie, raccontate dall'interno." />
+    <meta name="theme-color" content="#101415" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:title" content="Housei — Live the view" />
+    <meta property="og:description" content="Dimore straordinarie, raccontate dall'interno." />
+    <meta property="og:image" content="/assets/villa-hero.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Housei — Live the view</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#tour">Vai al tour</a>
+
+    <header class="site-header" id="top" data-theme="light">
+      <a class="brand" href="#top" aria-label="Housei, torna all'inizio">housei<span>.</span></a>
+      <nav class="desktop-nav" aria-label="Navigazione principale">
+        <a href="#tour">Casa Aurea</a>
+        <a href="./attico-velario.html">Attico Velario</a>
+        <a href="#collection">Collezione</a>
+        <a class="nav-link" href="./visita-privata.html">Parliamone</a>
+      </nav>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="sr-only">Apri menu</span>
+        <span></span><span></span>
+      </button>
+    </header>
+
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Navigazione mobile" hidden>
+      <div class="mobile-menu-intro">
+        <p class="eyebrow light">Housei <span></span> Private real estate</p>
+        <p>Esplora la<br /><em>dimora.</em></p>
+      </div>
+      <div class="mobile-menu-links">
+        <a href="#tour"><span class="mobile-menu-index">01</span><span>Casa Aurea</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
+        <a href="./attico-velario.html"><span class="mobile-menu-index">02</span><span>Attico Velario</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
+        <a href="#collection"><span class="mobile-menu-index">03</span><span>Collezione</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <a class="mobile-menu-visit" href="./visita-privata.html"><span>Visita privata</span><span aria-hidden="true">↗</span></a>
+    </nav>
+
+    <main>
+      <section class="hero" data-header-theme="light" aria-labelledby="hero-title">
+        <img src="assets/villa-hero.png" alt="Villa mediterranea contemporanea con piscina a sfioro e vista sul mare" class="hero-image" />
+        <div class="hero-shade"></div>
+        <div class="hero-copy">
+          <p class="eyebrow light">Riviera ligure <span></span> Prima visita</p>
+          <h1 id="hero-title">Non guardarla.<br /><em>Abitala.</em></h1>
+          <p class="hero-description">Le dimore più rare non si spiegano con una pianta. Si attraversano.</p>
+        </div>
+        <div class="hero-bottom">
+          <button class="tour-launch" type="button" data-scroll-tour>
+            <span class="tour-launch-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v15m0 0 6-6m-6 6-6-6" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Inizia il tour
+          </button>
+          <p class="hero-meta">Casa Aurea<br />Portovenere, Italia</p>
+        </div>
+        <p class="scroll-cue">Scorri per entrare <span></span></p>
+      </section>
+
+      <section class="tour" id="tour" data-header-theme="light" aria-label="Tour di Casa Aurea">
+        <div class="tour-stage">
+          <div class="camera-world" aria-hidden="true">
+            <video class="tour-video" muted playsinline preload="metadata" poster="assets/villa-hero.png" data-video-src="assets/pixverse-home-tour-scroll.mp4">
+              <source src="assets/pixverse-home-tour-scroll.mp4" type="video/mp4" />
+            </video>
+            <div class="scene-vignette"></div>
+            <div class="motion-grain"></div>
+          </div>
+          <p class="tour-location">CASA AUREA <span>44°03' N / 9°50' E</span></p>
+          <p class="camera-status" aria-live="polite"><span class="status-number">01</span> <span class="status-word">Avvicinati</span></p>
+          <div class="camera-copy" aria-live="polite">
+            <p class="eyebrow light">Casa Aurea / visita immersiva</p>
+            <h2 class="camera-title">Segui la<br /><em>luce.</em></h2>
+            <p class="camera-description">Una soglia alla volta.</p>
+          </div>
+          <div class="camera-progress" aria-hidden="true"><span></span></div>
+          <a class="camera-details text-link" href="#casa-aurea">Dettagli della dimora <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="camera-path" aria-hidden="true"></div>
+      </section>
+
+      <section class="facts" id="casa-aurea" data-header-theme="light" aria-labelledby="facts-title">
+        <div class="facts-intro">
+          <p class="eyebrow">Un indirizzo, non un annuncio</p>
+          <h2 id="facts-title">Ci sono case che<br />cambiano il tuo modo<br />di <em>stare al mondo.</em></h2>
+        </div>
+        <dl class="facts-grid">
+          <div><dt>1.240</dt><dd>m² di terreno privato</dd></div>
+          <div><dt>485</dt><dd>m² abitativi</dd></div>
+          <div><dt>6</dt><dd>camere, tutte con vista</dd></div>
+          <div><dt>∞</dt><dd>piscina a sfioro sul mare</dd></div>
+        </dl>
+      </section>
+
+      <section class="property-collection" id="collection" data-header-theme="dark" aria-labelledby="collection-title">
+        <div class="collection-heading">
+          <p class="eyebrow">La collezione Housei <span></span> 02 dimore</p>
+          <h2 id="collection-title">Non una lista.<br /><em>Una selezione.</em></h2>
+          <p>Ogni dimora è scelta per un solo motivo: non assomigliare a nessun’altra.</p>
+          <a class="collection-advisor" href="./visita-privata.html#private-visit">Parla con un advisor <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="property-card-stack">
+          <a class="property-card property-card--aurea" href="#tour" aria-label="Esplora Casa Aurea a Portovenere">
+            <span class="property-card-image" aria-hidden="true"></span>
+            <span class="property-card-shade" aria-hidden="true"></span>
+            <span class="property-card-meta"><span>01 / In visita</span><span>Portovenere, Italia</span></span>
+            <span class="property-card-title">Casa<br /><em>Aurea.</em></span>
+            <span class="property-card-link">Inizia il tour <span aria-hidden="true">↗</span></span>
+          </a>
+          <a class="property-card property-card--velario" href="./attico-velario.html" aria-label="Scopri Attico Velario a Milano">
+            <span class="property-card-image" aria-hidden="true"></span>
+            <span class="property-card-shade" aria-hidden="true"></span>
+            <span class="property-card-meta"><span>02 / Nuova dimora</span><span>Milano, Italia</span></span>
+            <span class="property-card-title">Attico<br /><em>Velario.</em></span>
+            <span class="property-card-link">Inizia il tour <span aria-hidden="true">↗</span></span>
+          </a>
+        </div>
+      </section>
+
+      <section class="story" id="story" data-header-theme="light" aria-labelledby="story-title">
+        <div class="story-number">h<span>.</span></div>
+        <div class="story-copy">
+          <p class="eyebrow light">Housei, private real estate</p>
+          <h2 id="story-title">Ti portiamo dove<br />i numeri non <em>bastano.</em></h2>
+          <p>Housei seleziona poche dimore e le racconta come dovrebbero essere vissute: con tempo, discrezione e una conoscenza reale di ogni spazio.</p>
+          <a class="outline-button" href="./visita-privata.html#private-visit">Parla con un advisor <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <a class="brand" href="#top">housei<span>.</span></a>
+      <p>Milano · Portofino · Roma</p>
+      <p>© 2026 Housei</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+import { existsSync, readFileSync } from 'node:fs';
+
+const pages = ['index.html', 'attico-velario.html', 'visita-privata.html'];
+const documents = new Map();
+
+for (const page of pages) {
+  const content = readFileSync(page, 'utf8');
+  const ids = new Set([...content.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]));
+  const idCount = [...content.matchAll(/\sid="([^"]+)"/g)].length;
+  if (ids.size !== idCount) throw new Error(`${page}: duplicate id found`);
+  documents.set(page, { content, ids });
+}
+
+for (const [page, { content }] of documents) {
+  const references = [...content.matchAll(/\s(?:href|src)="([^"]+)"/g)].map((match) => match[1]);
+  for (const reference of references) {
+    if (/^(https?:|mailto:|data:)/.test(reference)) continue;
+    const [file = page, anchor] = reference.split('#');
+    const target = file || page;
+    if (!documents.has(target) && !existsSync(target)) throw new Error(`${page}: missing ${reference}`);
+    if (anchor && documents.has(target) && !documents.get(target).ids.has(anchor)) {
+      throw new Error(`${page}: missing anchor ${reference}`);
+    }
+  }
+}
+
+const advisorLinks = [...documents.get('index.html').content.matchAll(/<a[^>]*href="([^"]*)"[^>]*>Parla con un advisor/g)];
+if (advisorLinks.length !== 2 || advisorLinks.some(([, href]) => href !== './visita-privata.html#private-visit')) {
+  throw new Error('index.html: every "Parla con un advisor" link must open the private-visit form');
+}
+
+console.log('Static site checks passed.');

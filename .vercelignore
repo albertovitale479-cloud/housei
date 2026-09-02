@@ -1,0 +1,12 @@
+.DS_Store
+.git
+.github
+.venv
+.pixverse-runtime
+projects
+tools
+assets/attico-velario-tour.mp4
+assets/casa-aurea-tour-optimized.mp4
+assets/pixverse_video_422232012965795_1788290762222.mp4
+assets/villa-salon.png
+assets/villa-suite.png

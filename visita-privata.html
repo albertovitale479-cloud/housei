@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Richiedi una visita privata Housei." />
+    <meta name="theme-color" content="#101415" />
+    <title>Visita privata — Housei</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="property-page private-visit-page">
+    <a class="skip-link" href="#private-visit">Vai al modulo di richiesta</a>
+
+    <header class="property-header">
+      <a class="brand" href="./index.html#top" aria-label="Housei, torna alla home">housei<span>.</span></a>
+      <nav class="property-nav" aria-label="Navigazione principale">
+        <a href="./index.html#tour">Casa Aurea</a>
+        <a href="./attico-velario.html">Attico Velario</a>
+        <a href="./index.html#collection">Collezione</a>
+      </nav>
+      <div class="property-header-actions">
+        <a class="property-back" href="./index.html#top" aria-label="Torna alla home">← <span>Home</span></a>
+        <button class="menu-button property-menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="sr-only">Apri menu</span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Navigazione mobile" hidden>
+      <div class="mobile-menu-intro">
+        <p class="eyebrow light">Housei <span></span> Private real estate</p>
+        <p>Incontra la<br /><em>dimora.</em></p>
+      </div>
+      <div class="mobile-menu-links">
+        <a href="./index.html#tour"><span class="mobile-menu-index">01</span><span>Casa Aurea</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
+        <a href="./attico-velario.html"><span class="mobile-menu-index">02</span><span>Attico Velario</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
+        <a href="./index.html#collection"><span class="mobile-menu-index">03</span><span>Collezione</span><span class="mobile-menu-arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <a class="mobile-menu-visit" href="#private-visit"><span>Visita privata</span><span aria-hidden="true">↗</span></a>
+    </nav>
+
+    <main>
+      <section class="private-visit-intro" aria-labelledby="private-intro-title">
+        <div class="private-visit-copy">
+          <p class="eyebrow light">Housei / Private real estate</p>
+          <h1 id="private-intro-title">Una visita<br /><em>senza rumore.</em></h1>
+          <p>Raccontaci cosa cerchi. Ti apriremo soltanto le porte che meritano di essere attraversate.</p>
+        </div>
+      </section>
+
+      <section class="property-inquire" id="private-visit" aria-labelledby="private-visit-title">
+        <div>
+          <p class="eyebrow">Visita privata</p>
+          <h2 id="private-visit-title">Questo non è<br />un appuntamento.<br /><em>È un accesso.</em></h2>
+        </div>
+        <form class="property-form" id="private-visit-form">
+          <label>Nome e cognome<input type="text" name="name" autocomplete="name" required /></label>
+          <label>Email<input type="email" name="email" autocomplete="email" required /></label>
+          <label>Telefono<input type="tel" name="tel" autocomplete="tel" /></label>
+          <label>Messaggio<textarea name="message" rows="3" placeholder="Dimmi quale dimora vuoi conoscere."></textarea></label>
+          <button class="property-submit" type="submit">Richiedi accesso <span aria-hidden="true">↗</span></button>
+          <p class="property-form-status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand" href="./index.html#top">housei<span>.</span></a>
+      <p>Private real estate</p>
+      <p>© 2026 Housei</p>
+    </footer>
+    <script src="private-visit.js"></script>
+  </body>
+</html>
