@@ -7,48 +7,22 @@ const statusWord = document.querySelector('.property-status-word');
 const tourProgress = document.querySelector('.property-tour-progress span');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-let desiredVideoTime = 0;
 let activeStep = -1;
 let scrollFrame = 0;
 let videoFrame = 0;
-let videoIsSeeking = false;
-let lastVideoTick = 0;
-let videoLoaded = false;
+let videoSeeking = false;
+let desiredVideoTime = 0;
 
 const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 
-function loadScrollVideo() {
-  if (videoLoaded || reduceMotion.matches || !tourVideo.dataset.videoSrc) return;
-  videoLoaded = true;
-
-  // A blob lets the film scrub reliably even when the static host does not
-  // support byte-range media requests.
-  fetch(tourVideo.dataset.videoSrc)
-    .then((response) => response.ok ? response.blob() : Promise.reject(response.status))
-    .then((blob) => {
-      tourVideo.src = URL.createObjectURL(blob);
-      tourVideo.load();
-    })
-    .catch(() => {
-      // The source element remains available as a progressive fallback.
-    });
-}
-
 function scheduleVideoSeek() {
-  if (videoFrame || videoIsSeeking || reduceMotion.matches || !Number.isFinite(tourVideo.duration)) return;
-  videoFrame = window.requestAnimationFrame((timestamp) => {
+  if (videoFrame || videoSeeking || reduceMotion.matches || !Number.isFinite(tourVideo.duration)) return;
+  videoFrame = window.requestAnimationFrame(() => {
     videoFrame = 0;
     const distance = desiredVideoTime - tourVideo.currentTime;
-    if (Math.abs(distance) < .016 || videoIsSeeking) return;
-
-    // Ease into the target time so wheel scrolling and trackpad gestures feel
-    // like one continuous camera move rather than a series of frame jumps.
-    const elapsed = Math.min(timestamp - (lastVideoTick || timestamp - 16), 48);
-    lastVideoTick = timestamp;
-    const smoothing = 1 - Math.exp(-elapsed / 92);
-    const nextTime = tourVideo.currentTime + clamp(distance * smoothing, -.14, .14);
-    videoIsSeeking = true;
-    tourVideo.currentTime = nextTime;
+    if (Math.abs(distance) < .02 || videoSeeking) return;
+    videoSeeking = true;
+    tourVideo.currentTime = desiredVideoTime;
   });
 }
 
@@ -87,26 +61,13 @@ function requestTourFrame() {
   });
 }
 
-if (reduceMotion.matches) {
-  tourVideo.pause();
-} else if ('IntersectionObserver' in window) {
-  const tourObserver = new IntersectionObserver((entries, observer) => {
-    if (!entries.some((entry) => entry.isIntersecting)) return;
-    loadScrollVideo();
-    observer.disconnect();
-  }, { rootMargin: '320px 0px' });
-  tourObserver.observe(propertyTour);
-} else {
-  loadScrollVideo();
-}
-
-tourVideo.addEventListener('seeked', () => {
-  videoIsSeeking = false;
-  scheduleVideoSeek();
-});
-tourVideo.addEventListener('loadedmetadata', setTourFrame);
 window.addEventListener('scroll', requestTourFrame, { passive: true });
 window.addEventListener('resize', requestTourFrame, { passive: true });
+tourVideo.addEventListener('loadedmetadata', setTourFrame);
+tourVideo.addEventListener('seeked', () => {
+  videoSeeking = false;
+  scheduleVideoSeek();
+});
 setTourFrame();
 
 const menuButton = document.querySelector('.property-menu-button');

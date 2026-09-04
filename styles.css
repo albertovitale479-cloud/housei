@@ -163,7 +163,7 @@ footer p { margin: 0; }
 .advisor-steps li > span { grid-row: span 2; color: #d4b476; font-size: .61rem; letter-spacing: .12em; }
 .advisor-steps strong { font-size: .7rem; font-weight: 500; letter-spacing: .11em; text-transform: uppercase; }
 .advisor-steps small { margin-top: .25rem; color: rgba(241,238,231,.62); font-size: .82rem; line-height: 1.4; }
-.advisor-form { display: grid; grid-template-columns: minmax(170px, .65fr) minmax(280px, 1fr); gap: clamp(2rem, 4vw, 4.5rem); max-width: 800px; padding: clamp(2rem, 4vw, 4rem); background: #f0ede5; color: #151717; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+.advisor-form { display: grid; grid-template-columns: minmax(170px, .65fr) minmax(280px, 1fr); gap: clamp(2rem, 4vw, 4.5rem); max-width: 800px; padding: clamp(2rem, 4vw, 4rem); background: #f0ede5; color: #151717; box-shadow: 0 20px 60px rgba(0,0,0,.2); scroll-margin-top: 7rem; }
 .advisor-form-heading { align-self: start; }
 .advisor-form-heading .eyebrow { color: #7c6337; }
 .advisor-form-heading h2 { margin: 1rem 0 0; font-size: clamp(3rem, 4.4vw, 5rem); }
@@ -193,7 +193,7 @@ footer p { margin: 0; }
 .property-tour { position: relative; background: #1c2224; }
 .property-hero { position: sticky; z-index: 0; top: 0; min-height: 760px; height: 100svh; overflow: hidden; isolation: isolate; background: #1c2224; }
 .property-camera-path { position: relative; height: 410svh; pointer-events: none; }
-.property-hero-video { position: absolute; z-index: -3; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transform: translateZ(0); will-change: transform; }
+.property-hero-video { position: absolute; z-index: -3; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; background: #1c2224; }
 .property-hero-shade { position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, rgba(2,5,6,.66), rgba(2,5,6,.08) 62%), linear-gradient(0deg, rgba(2,5,6,.58), transparent 50%); }
 .property-hero-grid { position: absolute; z-index: -1; inset: 0; opacity: .27; background-image: linear-gradient(90deg, transparent 49.93%, rgba(255,255,255,.23) 50%, transparent 50.07%), linear-gradient(0deg, transparent 49.93%, rgba(255,255,255,.13) 50%, transparent 50.07%); background-size: 50% 100%, 100% 50%; pointer-events: none; }
 .property-hero-copy { position: absolute; top: 50%; left: clamp(1.3rem, 9.5vw, 10rem); width: min(760px, 74vw); transform: translateY(-42%); }
@@ -314,7 +314,7 @@ textarea { resize: vertical; }
   .private-visit-copy h1 { font-size: clamp(4.6rem, 18vw, 6.7rem); }
   .advisor-intake { grid-template-columns: 1fr; gap: 3.5rem; min-height: auto; padding: 4.5rem 1.3rem 5.5rem; }
   .advisor-intake-copy h1 { font-size: clamp(4.4rem, 18vw, 6.7rem); }
-  .advisor-form { grid-template-columns: 1fr; gap: 2rem; padding: 1.5rem; }
+  .advisor-form { grid-template-columns: 1fr; gap: 2rem; padding: 1.5rem; scroll-margin-top: 5.5rem; }
   .advisor-form textarea { min-height: 7.5rem; }
   .property-camera-path { height: 370svh; }
   .property-hero-copy { top: 48%; width: calc(100% - 2.6rem); transform: translateY(-50%); }

@@ -63,6 +63,12 @@ if (requestedInterest) {
   advisorContext.textContent = `Richiesta per: ${requestedInterest}.`;
 }
 
+if (window.location.hash === '#advisor-form') {
+  window.requestAnimationFrame(() => {
+    advisorForm.scrollIntoView({ block: 'start' });
+  });
+}
+
 advisorForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   formStatus.textContent = '';
