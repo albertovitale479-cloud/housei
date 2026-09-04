@@ -6,6 +6,7 @@ const interestSelect = advisorForm.querySelector('#interest');
 const advisorContext = document.querySelector('#advisor-context');
 const formStatus = advisorForm.querySelector('.property-form-status');
 const submitButton = advisorForm.querySelector('[type="submit"]');
+const submitLabel = submitButton.querySelector('span');
 let menuCloseTimer = 0;
 let menuFocusTimer = 0;
 
@@ -65,6 +66,7 @@ if (requestedInterest) {
 advisorForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   formStatus.textContent = '';
+  formStatus.dataset.state = '';
 
   if (!advisorForm.checkValidity()) {
     advisorForm.reportValidity();
@@ -73,7 +75,7 @@ advisorForm.addEventListener('submit', async (event) => {
 
   const request = Object.fromEntries(new FormData(advisorForm).entries());
   submitButton.disabled = true;
-  submitButton.querySelector('span').textContent = 'Invio in corso';
+  submitLabel.textContent = 'Invio in corso';
   formStatus.textContent = 'Stiamo inviando la tua richiesta…';
 
   try {
@@ -89,10 +91,12 @@ advisorForm.addEventListener('submit', async (event) => {
     advisorForm.reset();
     interestSelect.value = requestedInterest && optionValues.includes(requestedInterest) ? requestedInterest : 'Consulenza Housei';
     formStatus.textContent = result.message || 'Richiesta inviata. Un advisor Housei ti ricontatterà a breve.';
+    formStatus.dataset.state = 'success';
   } catch (error) {
     formStatus.textContent = error.message || 'Non siamo riusciti a inviare la richiesta. Riprova tra poco.';
+    formStatus.dataset.state = 'error';
   } finally {
     submitButton.disabled = false;
-    submitButton.querySelector('span').textContent = 'Invia la richiesta';
+    submitLabel.textContent = 'Invia la richiesta';
   }
 });
