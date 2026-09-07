@@ -70,51 +70,15 @@ tourVideo.addEventListener('seeked', () => {
 });
 setTourFrame();
 
-const menuButton = document.querySelector('.property-menu-button');
-const mobileMenu = document.querySelector('.mobile-menu');
-const menuLabel = menuButton.querySelector('.sr-only');
-let menuCloseTimer = 0;
-let menuFocusTimer = 0;
-const menuFocusables = () => Array.from(mobileMenu.querySelectorAll('a, button:not([disabled])'));
-
-const closeMenu = (restoreFocus = true) => {
-  window.clearTimeout(menuCloseTimer);
-  window.clearTimeout(menuFocusTimer);
-  menuButton.setAttribute('aria-expanded', 'false');
-  menuLabel.textContent = 'Apri menu';
-  document.body.classList.remove('menu-is-open');
-  document.body.style.overflow = '';
-  menuCloseTimer = window.setTimeout(() => { mobileMenu.hidden = true; }, 280);
-  if (restoreFocus) menuButton.focus();
-};
-
-const openMenu = () => {
-  window.clearTimeout(menuCloseTimer);
-  window.clearTimeout(menuFocusTimer);
-  mobileMenu.hidden = false;
-  menuButton.setAttribute('aria-expanded', 'true');
-  menuLabel.textContent = 'Chiudi menu';
-  document.body.style.overflow = 'hidden';
-  window.requestAnimationFrame(() => document.body.classList.add('menu-is-open'));
-  menuFocusTimer = window.setTimeout(() => mobileMenu.querySelector('a')?.focus(), 280);
-};
-
-menuButton.addEventListener('click', () => {
-  menuButton.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
+// Start inside the living area; the separate details link opens the property facts.
+document.querySelector('[data-enter-attico]').addEventListener('click', () => {
+  tourVideo.play().then(() => { tourVideo.pause(); setTourFrame(); }).catch(() => {});
+  const travel = Math.max(propertyTour.offsetHeight - window.innerHeight, 1);
+  window.scrollTo({ top: propertyTour.offsetTop + travel * .48, behavior: reduceMotion.matches ? 'instant' : 'smooth' });
 });
-mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => closeMenu(false)));
-window.addEventListener('keydown', (event) => {
-  if (menuButton.getAttribute('aria-expanded') !== 'true') return;
-  if (event.key === 'Escape') {
-    closeMenu();
-    return;
-  }
-  if (event.key !== 'Tab') return;
-  const items = menuFocusables();
-  const currentIndex = items.indexOf(document.activeElement);
-  const nextIndex = event.shiftKey ? currentIndex - 1 : currentIndex + 1;
-  if (nextIndex < 0 || nextIndex >= items.length) {
-    event.preventDefault();
-    items[event.shiftKey ? items.length - 1 : 0]?.focus();
-  }
-});
+
+// Static previews may not support byte ranges, which are needed for video seeking.
+fetch(tourVideo.querySelector('source').src)
+  .then((response) => response.ok ? response.blob() : Promise.reject(response.status))
+  .then((blob) => { tourVideo.src = URL.createObjectURL(blob); tourVideo.load(); })
+  .catch(() => {});

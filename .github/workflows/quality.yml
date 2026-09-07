@@ -20,7 +20,18 @@ jobs:
         run: node scripts/check-site.mjs
       - name: Validate browser scripts
         run: |
+          node --check navigation.js
           node --check script.js
           node --check attico.js
           node --check private-visit.js
           node --check api/contact.js
+      - name: Check contact validation and delivery handling
+        run: node scripts/check-contact.cjs
+      - name: Install browser checks
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Check responsive layouts and interactions
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/housei-server.log 2>&1 &
+          npm run test:browser

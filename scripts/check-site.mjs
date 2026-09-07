@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
+import { posix } from 'node:path';
 
 const pages = ['index.html', 'attico-velario.html', 'visita-privata.html'];
 const documents = new Map();
@@ -17,7 +18,7 @@ for (const [page, { content }] of documents) {
     if (/^(https?:|mailto:|data:)/.test(reference)) continue;
     const [pathWithQuery = page, anchor] = reference.split('#');
     const [file = page] = pathWithQuery.split('?');
-    const target = file || page;
+    const target = posix.normalize(file || page);
     if (!documents.has(target) && !existsSync(target)) throw new Error(`${page}: missing ${reference}`);
     if (anchor && documents.has(target) && !documents.get(target).ids.has(anchor)) {
       throw new Error(`${page}: missing anchor ${reference}`);
@@ -26,12 +27,12 @@ for (const [page, { content }] of documents) {
 }
 
 const advisorLinks = [...documents.get('index.html').content.matchAll(/<a[^>]*href="([^"]*)"[^>]*>Parla con un advisor/g)];
-if (advisorLinks.length !== 2 || advisorLinks.some(([, href]) => href !== './visita-privata.html?interesse=Consulenza')) {
+if (advisorLinks.length !== 2 || advisorLinks.some(([, href]) => href !== './visita-privata.html?interesse=Consulenza#advisor-form')) {
   throw new Error('index.html: every "Parla con un advisor" link must open the advisor form');
 }
 
 const atticoAdvisorLinks = [...documents.get('attico-velario.html').content.matchAll(/href="([^"]*visita-privata[^"]*)"/g)];
-if (atticoAdvisorLinks.length !== 3 || atticoAdvisorLinks.some(([, href]) => href !== './visita-privata.html?interesse=Attico%20Velario')) {
+if (atticoAdvisorLinks.length !== 3 || atticoAdvisorLinks.some(([, href]) => href !== './visita-privata.html?interesse=Attico%20Velario#advisor-form')) {
   throw new Error('attico-velario.html: every contact CTA must carry the Attico Velario context');
 }
 

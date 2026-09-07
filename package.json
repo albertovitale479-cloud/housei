@@ -1,0 +1,11 @@
+{
+  "name": "housei",
+  "private": true,
+  "scripts": {
+    "test": "node scripts/check-site.mjs && node --check navigation.js && node --check script.js && node --check attico.js && node --check private-visit.js && node --check api/contact.js && node scripts/check-contact.cjs",
+    "test:browser": "node scripts/check-browser.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

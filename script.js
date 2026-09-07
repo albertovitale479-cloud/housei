@@ -78,7 +78,7 @@ const onScroll = () => {
   scrollFrame = window.requestAnimationFrame(() => {
     scrollFrame = 0;
     header.classList.toggle('scrolled', window.scrollY > window.innerHeight * .72);
-    const section = document.elementFromPoint(window.innerWidth * .5, header.offsetHeight + 12)?.closest('[data-header-theme]');
+    const section = document.elementFromPoint(window.innerWidth * .5, header.offsetHeight + 24)?.closest('[data-header-theme]');
     if (section) header.dataset.theme = section.dataset.headerTheme;
     setCamera();
   });
@@ -94,51 +94,5 @@ document.querySelector('[data-scroll-tour]').addEventListener('click', () => {
     tourVideo.pause();
     setCamera();
   }).catch(() => {});
-  document.querySelector('#tour').scrollIntoView({ behavior: 'smooth' });
-});
-
-const menuButton = document.querySelector('.menu-button');
-const mobileMenu = document.querySelector('.mobile-menu');
-const menuLabel = menuButton.querySelector('.sr-only');
-let menuCloseTimer = 0;
-let menuFocusTimer = 0;
-const menuFocusables = () => Array.from(mobileMenu.querySelectorAll('a, button:not([disabled])'));
-const closeMenu = (restoreFocus = true) => {
-  window.clearTimeout(menuCloseTimer);
-  window.clearTimeout(menuFocusTimer);
-  menuButton.setAttribute('aria-expanded', 'false');
-  menuLabel.textContent = 'Apri menu';
-  document.body.classList.remove('menu-is-open');
-  document.body.style.overflow = '';
-  menuCloseTimer = window.setTimeout(() => { mobileMenu.hidden = true; }, 280);
-  if (restoreFocus) menuButton.focus();
-};
-const openMenu = () => {
-  window.clearTimeout(menuCloseTimer);
-  window.clearTimeout(menuFocusTimer);
-  mobileMenu.hidden = false;
-  menuButton.setAttribute('aria-expanded', 'true');
-  menuLabel.textContent = 'Chiudi menu';
-  document.body.style.overflow = 'hidden';
-  window.requestAnimationFrame(() => document.body.classList.add('menu-is-open'));
-  menuFocusTimer = window.setTimeout(() => mobileMenu.querySelector('a')?.focus(), 280);
-};
-menuButton.addEventListener('click', () => {
-  menuButton.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
-});
-mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => closeMenu(false)));
-window.addEventListener('keydown', (event) => {
-  if (menuButton.getAttribute('aria-expanded') !== 'true') return;
-  if (event.key === 'Escape') {
-    closeMenu();
-    return;
-  }
-  if (event.key !== 'Tab') return;
-  const items = menuFocusables();
-  const currentIndex = items.indexOf(document.activeElement);
-  const nextIndex = event.shiftKey ? currentIndex - 1 : currentIndex + 1;
-  if (nextIndex < 0 || nextIndex >= items.length) {
-    event.preventDefault();
-    items[event.shiftKey ? items.length - 1 : 0]?.focus();
-  }
+  document.querySelector('#tour').scrollIntoView({ behavior: reduceMotion.matches ? 'instant' : 'smooth' });
 });

@@ -55,3 +55,18 @@ Il modulo usa una Vercel Function (`api/contact.js`) che inoltra i messaggi via 
 3. Fai un nuovo deploy e invia una richiesta di prova.
 
 Il sito non mostra più una conferma fittizia: senza questa configurazione avvisa chiaramente che l'invio non è disponibile.
+
+## Verifica delle interazioni e del responsive
+
+Dopo aver avviato l’anteprima locale sulla porta 4173, in un altro terminale:
+
+```bash
+npm ci
+npx playwright install chromium
+npm test
+npm run test:browser
+```
+
+Il controllo browser prova le tre pagine a 10 dimensioni (320–1920 px), i collegamenti desktop e mobile, apertura/chiusura del menu e ridimensionamento, ingresso nel tour, compilazione e validazione del modulo. Le risposte di invio sono simulate: i test non spediscono email. `SITE_URL` permette di scegliere un indirizzo di anteprima diverso; `BROWSER_PATH` permette di usare un Chromium già installato.
+
+La navigazione condivisa è in `navigation.js`. Il menu con attributo `hidden` deve sempre avere `display: none`: uno strato trasparente ma presente bloccherebbe nuovamente link e campi.

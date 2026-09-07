@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=20260904d" />
+    <link rel="stylesheet" href="styles.css?v=20260907" />
   </head>
   <body class="property-page private-visit-page">
     <a class="skip-link" href="#advisor-form">Vai al modulo per parlare con un advisor</a>
@@ -72,16 +72,16 @@
             </select>
 
             <label for="name">Nome e cognome</label>
-            <input id="name" type="text" name="name" autocomplete="name" required />
+            <input id="name" type="text" name="name" maxlength="120" autocomplete="name" required />
 
             <label for="email">Email</label>
             <input id="email" type="email" name="email" autocomplete="email" inputmode="email" required />
 
             <label for="tel">Telefono <span>(facoltativo)</span></label>
-            <input id="tel" type="tel" name="tel" autocomplete="tel" inputmode="tel" />
+            <input id="tel" type="tel" name="tel" maxlength="60" autocomplete="tel" inputmode="tel" />
 
             <label for="message">Cosa stai cercando?</label>
-            <textarea id="message" name="message" rows="4" placeholder="Zona, tempistiche, esigenze o una domanda specifica." required></textarea>
+            <textarea id="message" name="message" maxlength="3000" rows="4" placeholder="Zona, tempistiche, esigenze o una domanda specifica." required></textarea>
 
             <label class="advisor-consent" for="consent">
               <input id="consent" type="checkbox" name="consent" required />
@@ -100,6 +100,7 @@
       <p>Private real estate</p>
       <p>© 2026 Housei</p>
     </footer>
-    <script src="private-visit.js?v=20260904b"></script>
+    <script src="navigation.js?v=20260907"></script>
+    <script src="private-visit.js?v=20260907"></script>
   </body>
 </html>
