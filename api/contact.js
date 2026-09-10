@@ -2,6 +2,34 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const clean = (value) => String(value || '').trim();
 
+const forwardToN8n = async (details, request) => {
+  const { N8N_WEBHOOK_URL, N8N_WEBHOOK_SECRET } = process.env;
+  if (!N8N_WEBHOOK_URL) return false;
+  if (!N8N_WEBHOOK_SECRET) throw new Error('N8N_WEBHOOK_SECRET is missing');
+
+  const automationResponse = await fetch(N8N_WEBHOOK_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Housei-Webhook-Secret': N8N_WEBHOOK_SECRET,
+    },
+    body: JSON.stringify({
+      ...details,
+      consentAccepted: true,
+      source: 'housei-private-visit',
+      submittedAt: new Date().toISOString(),
+      requestId: clean(request.headers?.['x-vercel-id']) || `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    }),
+  });
+
+  if (!automationResponse.ok) {
+    const errorBody = await automationResponse.text();
+    throw new Error(`n8n delivery failed (${automationResponse.status}): ${errorBody.slice(0, 500)}`);
+  }
+
+  return true;
+};
+
 module.exports = async (request, response) => {
   if (request.method !== 'POST') {
     response.setHeader('Allow', 'POST');
@@ -27,43 +55,16 @@ module.exports = async (request, response) => {
     return response.status(400).json({ message: 'Alcuni campi sono troppo lunghi. Riduci il testo e riprova.' });
   }
 
-  const { RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL } = process.env;
-  if (!RESEND_API_KEY || !CONTACT_FROM_EMAIL || !CONTACT_TO_EMAIL) {
-    return response.status(503).json({ message: 'Il servizio di contatto non è ancora configurato. Riprova più tardi.' });
-  }
-
-  try {
-    const resendResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: CONTACT_FROM_EMAIL,
-        to: [CONTACT_TO_EMAIL],
-        reply_to: details.email,
-        subject: `Nuova richiesta Housei — ${details.interest}`,
-        text: [
-          `Nome: ${details.name}`,
-          `Email: ${details.email}`,
-          `Telefono: ${details.tel || 'Non indicato'}`,
-          `Interesse: ${details.interest}`,
-          '',
-          'Messaggio:',
-          details.message,
-        ].join('\n'),
-      }),
-    });
-
-    if (!resendResponse.ok) {
-      console.error('Resend delivery failed:', await resendResponse.text());
+  const { N8N_WEBHOOK_URL } = process.env;
+  if (N8N_WEBHOOK_URL) {
+    try {
+      await forwardToN8n(details, request);
+      return response.status(200).json({ message: 'Richiesta inviata. Un advisor Housei ti ricontatterà a breve.' });
+    } catch (error) {
+      console.error('Contact automation failed:', error);
       return response.status(502).json({ message: 'Non siamo riusciti a inoltrare la richiesta. Riprova più tardi.' });
     }
-
-    return response.status(200).json({ message: 'Richiesta inviata. Un advisor Housei ti ricontatterà a breve.' });
-  } catch (error) {
-    console.error('Contact delivery failed:', error);
-    return response.status(502).json({ message: 'Non siamo riusciti a inoltrare la richiesta. Riprova più tardi.' });
   }
+
+  return response.status(503).json({ message: 'Il servizio di contatto non è ancora configurato. Riprova più tardi.' });
 };

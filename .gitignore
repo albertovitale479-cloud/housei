@@ -5,3 +5,5 @@
 projects/
 node_modules/
 npm-debug.log*
+infra/n8n/.env
+infra/n8n/backups/

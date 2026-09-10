@@ -45,16 +45,18 @@ I push su `main` aggiornano la produzione; le pull request ricevono una preview.
 
 ## Modulo “Parla con un advisor”
 
-Il modulo usa una Vercel Function (`api/contact.js`) che inoltra i messaggi via [Resend](https://resend.com). Prima di pubblicare la versione con il form attivo:
+Il modulo usa una Vercel Function (`api/contact.js`) che inoltra i messaggi a un workflow n8n self-hosted. n8n spedisce le due notifiche attraverso il server SMTP di una casella email esistente. Prima di pubblicare la versione con il form attivo:
 
-1. Crea un account Resend e verifica il dominio da cui partiranno le email.
-2. In Vercel apri **Project Settings → Environment Variables** e aggiungi:
-   - `RESEND_API_KEY`: chiave API di Resend;
-   - `CONTACT_FROM_EMAIL`: mittente verificato, ad esempio `Housei <advisor@tuodominio.it>`;
-   - `CONTACT_TO_EMAIL`: casella che riceverà le richieste, ad esempio `team@tuodominio.it`.
-3. Fai un nuovo deploy e invia una richiesta di prova.
+1. Avvia n8n seguendo le istruzioni in [`infra/n8n`](infra/n8n).
+2. Crea e attiva il workflow Webhook → Send Email descritto nella guida.
+3. In Vercel apri **Project Settings → Environment Variables** e aggiungi `N8N_WEBHOOK_URL` e `N8N_WEBHOOK_SECRET`.
+4. Fai un nuovo deploy e invia una richiesta di prova.
 
 Il sito non mostra più una conferma fittizia: senza questa configurazione avvisa chiaramente che l'invio non è disponibile.
+
+### Automazione self-hosted con n8n
+
+La configurazione pronta per una VPS si trova in [`infra/n8n`](infra/n8n). Quando sono presenti `N8N_WEBHOOK_URL` e `N8N_WEBHOOK_SECRET`, la Function inoltra il lead a n8n. Le credenziali SMTP restano cifrate dentro n8n e non arrivano mai al browser o al repository.
 
 ## Verifica delle interazioni e del responsive
 
