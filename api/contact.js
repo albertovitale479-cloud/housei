@@ -2,12 +2,27 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const clean = (value) => String(value || '').trim();
 
+const resolveWebhookUrl = (value) => {
+  const configuredUrl = clean(value);
+  if (!configuredUrl) return '';
+
+  const webhookUrl = new URL(configuredUrl);
+  const path = webhookUrl.pathname.replace(/\/+$/, '');
+
+  // Per la demo accettiamo anche il solo dominio generato da Cloudflare.
+  // In questo modo un nuovo Quick Tunnel non richiede di ricordare il path n8n.
+  if (!path) webhookUrl.pathname = '/webhook/housei-lead';
+
+  return webhookUrl.toString();
+};
+
 const forwardToN8n = async (details, request) => {
   const { N8N_WEBHOOK_URL, N8N_WEBHOOK_SECRET } = process.env;
-  if (!N8N_WEBHOOK_URL) return false;
+  const webhookUrl = resolveWebhookUrl(N8N_WEBHOOK_URL);
+  if (!webhookUrl) return false;
   if (!N8N_WEBHOOK_SECRET) throw new Error('N8N_WEBHOOK_SECRET is missing');
 
-  const automationResponse = await fetch(N8N_WEBHOOK_URL, {
+  const automationResponse = await fetch(webhookUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
