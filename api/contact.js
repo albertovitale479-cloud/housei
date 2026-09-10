@@ -1,4 +1,7 @@
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const demoWebhookUrl = process.env.VERCEL
+  ? 'https://fuzzy-cope-loaded-bite.trycloudflare.com/webhook/housei-lead'
+  : '';
 
 const clean = (value) => String(value || '').trim();
 
@@ -18,7 +21,7 @@ const resolveWebhookUrl = (value) => {
 
 const forwardToN8n = async (details, request) => {
   const { N8N_WEBHOOK_URL, N8N_WEBHOOK_SECRET } = process.env;
-  const webhookUrl = resolveWebhookUrl(N8N_WEBHOOK_URL);
+  const webhookUrl = resolveWebhookUrl(demoWebhookUrl || N8N_WEBHOOK_URL);
   if (!webhookUrl) return false;
   if (!N8N_WEBHOOK_SECRET) throw new Error('N8N_WEBHOOK_SECRET is missing');
 
@@ -46,6 +49,8 @@ const forwardToN8n = async (details, request) => {
 };
 
 module.exports = async (request, response) => {
+  response.setHeader('X-Housei-Contact-Version', 'cloudflare-demo-20260910');
+
   if (request.method !== 'POST') {
     response.setHeader('Allow', 'POST');
     return response.status(405).json({ message: 'Metodo non consentito.' });
@@ -71,7 +76,7 @@ module.exports = async (request, response) => {
   }
 
   const { N8N_WEBHOOK_URL } = process.env;
-  if (N8N_WEBHOOK_URL) {
+  if (demoWebhookUrl || N8N_WEBHOOK_URL) {
     try {
       await forwardToN8n(details, request);
       return response.status(200).json({ message: 'Richiesta inviata. Un advisor Housei ti ricontatterà a breve.' });
